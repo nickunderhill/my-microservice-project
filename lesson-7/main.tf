@@ -64,7 +64,7 @@ module "jenkins" {
   github_pat        = var.github_pat
   github_user       = var.github_user
   github_repo_url   = "https://github.com/nickunderhill/my-microservice-project"
-  github_branch     = "lesson-6"
+  github_branch     = "lesson-8-9"
   providers = {
     helm = helm
     kubernetes = kubernetes
