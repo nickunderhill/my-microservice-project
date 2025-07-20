@@ -85,7 +85,12 @@ resource "helm_release" "jenkins" {
   timeout = 300
 
   values = [
-    file("${path.module}/values.yaml")
+    templatefile("${path.module}/values.yaml", {
+      github_pat = var.github_pat
+      github_user    = var.github_user
+      github_repo_url    = var.github_repo_url
+      github_branch    = var.github_branch
+    })
   ]
 
 }

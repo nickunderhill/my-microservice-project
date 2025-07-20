@@ -25,7 +25,7 @@ module "eks" {
   source          = "./modules/eks"          
   cluster_name    = "eks-cluster-demo"            # Назва кластера
   subnet_ids      = module.vpc.public_subnets     # ID підмереж
-  instance_type   = "t3.small"                    # Тип інстансів
+  instance_type   = "t3.medium"                    # Тип інстансів
   desired_size    = 1                             # Бажана кількість нодів
   max_size        = 2                             # Максимальна кількість нодів
   min_size        = 1                             # Мінімальна кількість нодів
@@ -61,9 +61,19 @@ module "jenkins" {
   namespace         = "jenkins"
   oidc_provider_arn = module.eks.oidc_provider_arn
   oidc_provider_url = module.eks.oidc_provider_url
+  github_pat        = var.github_pat
+  github_user       = var.github_user
+  github_repo_url   = "https://github.com/nickunderhill/my-microservice-project"
+  github_branch     = "lesson-6"
   providers = {
     helm = helm
     kubernetes = kubernetes
   }
   depends_on = [module.eks]
+}
+
+module "argo_cd" {
+  source       = "./modules/argo_cd"
+  namespace    = "argocd"
+  chart_version = "5.46.4"
 }

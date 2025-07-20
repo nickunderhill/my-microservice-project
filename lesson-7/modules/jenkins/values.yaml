@@ -47,8 +47,8 @@ controller:
                   - usernamePassword:
                       scope: GLOBAL
                       id: github-token
-                      username: AndriyDmitriv
-                      password: ${GITHUB_TOKEN}
+                      username: ${github_user}
+                      password: ${github_pat}
                       description: GitHub PAT
       seed-job: |
         jobs:
@@ -58,10 +58,10 @@ controller:
                 scm {
                   git {
                     remote {
-                      url('https://github.com/AndriyDmitriv/infra.git')
+                      url('${github_repo_url}')
                       credentials('github-token')
                     }
-                    branches('*/main')
+                    branches('${github_branch}')
                   }
                 }
                 steps {
@@ -73,10 +73,10 @@ controller:
                             scm {
                               git {
                                 remote {
-                                  url("https://github.com/AndriyDmitriv/infra.git")
+                                  url('${github_repo_url}')
                                   credentials("github-token")
                                 }
-                                branches("*/main")
+                                branches('${github_branch}')
                               }
                             }
                           }
