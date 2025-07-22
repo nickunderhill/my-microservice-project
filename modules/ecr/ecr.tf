@@ -10,7 +10,7 @@ resource "aws_ecr_repository" "main" {
   tags = {
     Name = var.ecr_name
     Name = "${var.ecr_name}-registry"
-    Environment = "lesson-5"
+    Environment = "goit-devops"
   }
 }
 

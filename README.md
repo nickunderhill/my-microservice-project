@@ -139,16 +139,6 @@ Jenkins, деплой Django застосунку, зберігання стан
 
 ---
 
-## 🗄️ Зберігання та PVC
-
-- Для Jenkins потрібен StorageClass з EBS (gp2/ebs-sc). Зробіть його дефолтним:
-  ```sh
-  kubectl patch storageclass gp2 -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
-  ```
-- Якщо PVC у статусі Pending — перевірте StorageClass та права AWS.
-
----
-
 ## 🔒 Безпека
 
 - Використовуйте IAM ролі, не access keys

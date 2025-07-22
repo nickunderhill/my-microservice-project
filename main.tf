@@ -1,8 +1,29 @@
-module "s3_backend" {
-  source = "./modules/s3-backend"                # Шлях до модуля
-  bucket_name = "podopryhora-goit-neoversity-tf-state-bucket"  # Ім'я S3-бакета
-  table_name  = "terraform-locks"                # Ім'я DynamoDB
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 4.0.0"
+    }
+    helm = {
+      source  = "hashicorp/helm"
+      version = ">= 2.0.0"
+    }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = ">= 2.0.0"
+    }
+  }
 }
+
+provider "aws" {
+  region = var.region
+}
+
+# module "s3_backend" {
+#   source = "./modules/s3-backend"                # Шлях до модуля
+#   bucket_name = "podopryhora-goit-neoversity-tf-state-bucket"  # Ім'я S3-бакета
+#   table_name  = "terraform-locks"                # Ім'я DynamoDB
+# }
 
 # Підключаємо модуль для VPC
 module "vpc" {
@@ -42,12 +63,14 @@ data "aws_eks_cluster_auth" "eks" {
 }
 
 provider "kubernetes" {
+  alias = "eks"
   host                   = data.aws_eks_cluster.eks.endpoint
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
   token                  = data.aws_eks_cluster_auth.eks.token
 }
 
 provider "helm" {
+  alias = "eks"
   kubernetes = {
     host                   = data.aws_eks_cluster.eks.endpoint
     cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
@@ -66,8 +89,8 @@ module "jenkins" {
   github_repo_url   = "https://github.com/nickunderhill/my-microservice-project"
   github_branch     = "lesson-8-9"
   providers = {
-    helm = helm
-    kubernetes = kubernetes
+    helm = helm.eks
+    kubernetes = kubernetes.eks
   }
   depends_on = [module.eks]
 }
@@ -76,4 +99,8 @@ module "argo_cd" {
   source       = "./modules/argo_cd"
   namespace    = "argocd"
   chart_version = "5.46.4"
+  providers = {
+    helm = helm.eks
+    kubernetes = kubernetes.eks
+  }
 }
