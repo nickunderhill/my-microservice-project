@@ -79,6 +79,7 @@ controller:
                                 branches('${github_branch}')
                               }
                             }
+                            scriptPath('${app_jenkinsfile_dir}/Jenkinsfile')
                           }
                         }
                       }

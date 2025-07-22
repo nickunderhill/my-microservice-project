@@ -90,6 +90,7 @@ resource "helm_release" "jenkins" {
       github_user    = var.github_user
       github_repo_url    = var.github_repo_url
       github_branch    = var.github_branch
+      app_jenkinsfile_dir = var.app_jenkinsfile_dir
     })
   ]
 

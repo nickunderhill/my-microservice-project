@@ -40,3 +40,8 @@ variable "github_branch" {
   description = "GitHub branch for Jenkins"
   type        = string
 }
+
+variable "app_jenkinsfile_dir" {
+  description = "Application Jenkinsfile location"
+  type        = string
+}

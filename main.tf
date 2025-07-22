@@ -88,6 +88,7 @@ module "jenkins" {
   github_user       = var.github_user
   github_repo_url   = "https://github.com/nickunderhill/my-microservice-project"
   github_branch     = "lesson-8-9"
+  app_jenkinsfile_dir  = "django-app"
   providers = {
     helm = helm.eks
     kubernetes = kubernetes.eks
