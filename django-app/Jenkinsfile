@@ -32,6 +32,7 @@ spec:
       steps {
         container('kaniko') {
           sh '''
+            cd django-app
             /kaniko/executor \\
               --context `pwd` \\
               --dockerfile `pwd`/Dockerfile \\
@@ -39,6 +40,7 @@ spec:
               --cache=true \\
               --insecure \\
               --skip-tls-verify
+            echo "Build & Push Docker Image succesfull"
           '''
         }
       }
