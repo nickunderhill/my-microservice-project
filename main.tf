@@ -105,3 +105,39 @@ module "argo_cd" {
     kubernetes = kubernetes.eks
   }
 }
+
+# Модуль бази данних RDS
+module "rds" {
+  source = "./modules/rds"
+
+  name                       = "django-db"
+  use_aurora                 = false
+  aurora_instance_count      = 2
+
+  # --- RDS-only ---
+  engine                     = "postgres"
+  engine_version             = "17.2"
+  parameter_group_family_rds = "postgres17"
+
+  # Common
+  instance_class             = "db.t3.micro"
+  allocated_storage          = 20
+  db_name                    = "django_db"
+  username                   = "django_user"
+  password                   = "pass9764gd"
+  subnet_private_ids         = module.vpc.private_subnets
+  subnet_public_ids          = module.vpc.public_subnets
+  publicly_accessible        = true
+  vpc_id                     = module.vpc.vpc_id
+  multi_az                   = false
+  backup_retention_period    = 7
+  parameters = {
+    max_connections              = "200"
+    log_min_duration_statement   = "500"
+  }
+
+  tags = {
+    Environment = "dev"
+    Project     = "django_db"
+  }
+} 

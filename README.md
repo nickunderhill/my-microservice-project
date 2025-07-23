@@ -29,10 +29,10 @@ Jenkins, деплой Django застосунку, зберігання стан
 ## 🏗️ Архітектура
 
 ```
-┌──────────┐  ┌──────────┐  ┌──────────┐  ┌─────────┐  ┌──────────┐  ┌──────────┐
-│   VPC    │  │   ECR    │  │   S3     │  │   EKS   │  │  Jenkins │  │  Argo CD │
-│  Module  │  │  Module  │  │  Backend │  │  Module │  │  Module  │  │  Module  │
-└──────────┘  └──────────┘  └──────────┘  └─────────┘  └──────────┘  └──────────┘
+┌──────────┐  ┌──────────┐  ┌──────────┐  ┌─────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐
+│   VPC    │  │   ECR    │  │   S3     │  │   EKS   │  │  Jenkins │  │  Argo CD │  │   RDS    │
+│  Module  │  │  Module  │  │  Backend │  │  Module │  │  Module  │  │  Module  │  │  Module  │
+└──────────┘  └──────────┘  └──────────┘  └─────────┘  └──────────┘  └──────────┘  └──────────┘
 ```
 
 - VPC: приватні/публічні підмережі, NAT, IGW
@@ -42,6 +42,7 @@ Jenkins, деплой Django застосунку, зберігання стан
 - Jenkins: CI/CD пайплайни, seed-job, інтеграція з GitHub
 - Argo CD: встановлення Argo CD, відстежування конфігурації в репозиторії,
   автоматичне оновлення додатку
+- RDS: розгортання RDS бази або Aurora-кластеру
 
 ---
 
@@ -182,11 +183,25 @@ Jenkins, деплой Django застосунку, зберігання стан
   kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
   ```
 
-![Argo CD Dashboard](/assets/img/argo-cd-dashboard.png 'Argo CD Dashboard')
-
 Після входу додаток має бути в статусі Healthy:
 
----
+![Argo CD Dashboard](/assets/img/argo-cd-dashboard.png 'Argo CD Dashboard')
+
+## 📚 RDS модуль
+
+- **Деплой через Terraform:** модуль автоматично створює RDS базу або
+  Aurora-кластер, залежно від прапора `use_aurora = true`
+- **Доступ:**
+
+Після виконання `terraform apply` enpoint доступний в змінній outputs
+`rds_endpoint`. Приклад підключеня до бази даних:
+
+```
+psql --host=mydb.xxxxxxxxxxxx.us-east-1.rds.amazonaws.com \
+     --port=5432 \
+     --username=mydbuser \
+     --dbname=mydatabase
+```
 
 ## 🔒 Безпека
 
