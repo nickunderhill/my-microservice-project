@@ -19,6 +19,10 @@ spec:
         - sleep
       args:
         - 99d
+    - name: git
+      image: alpine/git
+      command: ["cat"]
+      tty: true
 """
     }
   }
