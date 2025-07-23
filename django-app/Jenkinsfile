@@ -62,9 +62,9 @@ spec:
           withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PAT')]) {
             sh '''
               echo $GITHUB_USER
-              echo "User: $GIT_USER"
-              echo "User: $GIT_PAT"
-              git clone --branch $GIT_BRANCH https://$GIT_USER:$GIT_PAT@github.com/nickunderhill/my-microservice-project.git
+              // echo "User: $GIT_USER"
+              // echo "PAT: $GIT_PAT"
+              git clone --branch $GIT_BRANCH https://$GITHUB_USER@github.com/nickunderhill/my-microservice-project.git
               cd my-microservice-project/charts
 
               sed -i "s/tag: .*/tag: $IMAGE_TAG/" values.yaml
@@ -74,6 +74,7 @@ spec:
 
               git add values.yaml
               git commit -m "Update image tag to $IMAGE_TAG"
+              git remote set-url origin https://$GITHUB_USER@github.com/nickunderhill/my-microservice-project.git
               git push origin HEAD
             '''
           }
