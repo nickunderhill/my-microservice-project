@@ -33,11 +33,12 @@ spec:
         container('kaniko') {
           sh '''
             cd django-app
+            cat goit/settings.py | grep ALLOWED_HOSTS
             /kaniko/executor \\
               --context `pwd` \\
               --dockerfile `pwd`/Dockerfile \\
               --destination=$ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG \\
-              --cache=true \\
+              --cache=false \\
               --insecure \\
               --skip-tls-verify
           '''
