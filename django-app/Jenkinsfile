@@ -32,6 +32,7 @@ spec:
     IMAGE_NAME   = "django-app"
     IMAGE_TAG    = "v1.0.${BUILD_NUMBER}"
     GITHUB_USER = credentials('github-token')
+    GIT_BRANCH = "lesson-8-9"
     COMMIT_EMAIL = "jenkins@localhost"
     COMMIT_NAME  = "jenkins"
   }
@@ -63,7 +64,7 @@ spec:
               echo $GITHUB_USER
               echo "User: $GIT_USER"
               echo "User: $GIT_PAT"
-              git clone https://$GIT_USERNAME:$GIT_PAT@github.com/nickunderhill/my-microservice-project.git
+              git clone --branch $GIT_BRANCH https://$GIT_USERNAME:$GIT_PAT@github.com/nickunderhill/my-microservice-project.git
               cd charts
 
               sed -i "s/tag: .*/tag: $IMAGE_TAG/" values.yaml
