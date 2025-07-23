@@ -1,0 +1,31 @@
+# Terraform state
+*.tfstate
+*.tfstate.backup
+
+# Crash logs
+crash.log
+
+# CLI configuration files
+.terraform/
+.terraform.lock.hcl
+**/.terraform/
+
+# Sensitive variable overrides (optional but recommended)
+*.tfvars
+*.tfvars.json
+
+# IDE/editor junk
+*.swp
+*.bak
+*.tmp
+*.log
+.DS_Store
+
+# Plan output (if used)
+*.tfplan
+
+.env
+
+# Python
+__pycache__/
+*.py[cod]

@@ -1,0 +1,25 @@
+image:
+  repository: 377728961694.dkr.ecr.us-east-1.amazonaws.com/django-app
+  tag: v1.0.20
+  pullPolicy: Always
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 8000
+
+ingress:
+  enabled: false
+
+config:
+  POSTGRES_PORT: 5432
+  POSTGRES_HOST: db
+  POSTGRES_USER: django_user
+  POSTGRES_DB: django_db
+  POSTGRES_PASSWORD: pass9764gd
+
+# Horizontal Pod Autoscaler configuration
+hpa:
+  minReplicas: 1
+  maxReplicas: 6
+  targetCPUUtilizationPercentage: 70
