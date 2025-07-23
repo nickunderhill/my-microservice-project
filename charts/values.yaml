@@ -20,6 +20,6 @@ config:
 
 # Horizontal Pod Autoscaler configuration
 hpa:
-  minReplicas: 2
+  minReplicas: 1
   maxReplicas: 6
   targetCPUUtilizationPercentage: 70
