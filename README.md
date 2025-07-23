@@ -231,4 +231,4 @@ psql --host=mydb.xxxxxxxxxxxx.us-east-1.rds.amazonaws.com \
 ---
 
 **Автор:** [Подопригора Микола]  
-**Версія:** 0.0.9
+**Версія:** 0.0.10
