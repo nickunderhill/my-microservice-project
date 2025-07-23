@@ -132,10 +132,31 @@ Jenkins, деплой Django застосунку, зберігання стан
 - **PAT:** Зберігайте GitHub PAT як Jenkins Credential (`github-token`). Не
   хардкодьте у файлах!
 - **Доступ:**
+
   ```sh
   kubectl get svc -n jenkins
   ```
+
   Відкрийте EXTERNAL-IP:8080 у браузері.
+
+  ### Створення deployment pipeline
+
+  1. Після входу в Jenkins ви побачите **seed-job** на головній сторінці
+     Dashboard.
+  2. Перейдіть в **seed-job** pipeline і натисніть оберіть **Build now**
+  3. Для першого запуску необхідно підвтердити скрипт, для цього перейдіть в
+     **Dashboard -> Manage Jenkins -> In-process Script Approval** та
+     підвтердьте **seed-job**
+  4. У результаті виконання **seed-job** має створитися pipeline
+     **goit-django-docker**
+  5. Запуск **goit-django-docker** призводить до наступних дій:
+     - всередині контейнера **kaniko** збирається image з
+       **django-app/Dockerfile** та публікується в **ECR** репозиторій
+     - всередині контейнера **git** виконується комміт в поточний git
+       репозиторій, а саме - оновлюється значення **image.tag** у файлі
+       **charts/values.yaml**
+     - оновлення **charts/values.yaml** призводить до оновлення деплою
+       **django-app** в Argo CD
 
 ---
 
@@ -151,13 +172,17 @@ Jenkins, деплой Django застосунку, зберігання стан
 
   Відкрийте EXTERNAL-IP:8080 у браузері.
 
-  Логін: admin
+  **Логін:** admin
 
-  Пароль:
+  Щоб отримати **пароль** виконайте команду і скопіюйте результат:
 
   ```sh
   kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
   ```
+
+![Argo CD Dashboard](/assets/img/argo-cd-dashboard.png 'Argo CD Dashboard')
+
+Після входу додаток має бути в статусі Healthy:
 
 ---
 
