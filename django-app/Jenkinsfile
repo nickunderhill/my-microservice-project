@@ -40,7 +40,6 @@ spec:
               --cache=true \\
               --insecure \\
               --skip-tls-verify
-            echo "Build & Push Docker Image succesfull"
           '''
         }
       }
