@@ -65,7 +65,7 @@ spec:
               echo "User: $GIT_USER"
               echo "User: $GIT_PAT"
               git clone --branch $GIT_BRANCH https://$GIT_USERNAME:$GIT_PAT@github.com/nickunderhill/my-microservice-project.git
-              cd charts
+              cd my-microservice-project/charts
 
               sed -i "s/tag: .*/tag: $IMAGE_TAG/" values.yaml
 
