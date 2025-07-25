@@ -58,3 +58,9 @@ output "jenkins_release" {
 output "jenkins_namespace" {
   value = module.jenkins.jenkins_namespace
 }
+
+#-------------RDS-----------------
+
+output "rds_endpoint" {
+  value = module.rds.rds_endpoint
+}
