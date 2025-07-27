@@ -46,7 +46,7 @@ module "eks" {
   source          = "./modules/eks"          
   cluster_name    = "eks-cluster-demo"            # Назва кластера
   subnet_ids      = module.vpc.public_subnets     # ID підмереж
-  instance_type   = "t3.medium"                    # Тип інстансів
+  instance_type   = "t3a.large"                    # Тип інстансів
   desired_size    = 1                             # Бажана кількість нодів
   max_size        = 2                             # Максимальна кількість нодів
   min_size        = 1                             # Мінімальна кількість нодів
@@ -106,6 +106,18 @@ module "argo_cd" {
   }
 }
 
+# Модуль моніторинну Prometheus+Grafana
+module "monitoring" {
+  source        = "./modules/monitoring"
+  release_name  = "kube-prometheus-stack"
+  namespace     = "monitoring"
+  chart_version = "55.5.0"
+  providers = {
+    helm = helm.eks
+    kubernetes = kubernetes.eks
+  }
+}
+
 # Модуль бази данних RDS
 module "rds" {
   source = "./modules/rds"
@@ -116,7 +128,7 @@ module "rds" {
 
   # --- RDS-only ---
   engine                     = "postgres"
-  engine_version             = "17.2"
+  engine_version             = "17.4"
   parameter_group_family_rds = "postgres17"
 
   # Common

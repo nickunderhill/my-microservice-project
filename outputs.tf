@@ -64,3 +64,9 @@ output "jenkins_namespace" {
 output "rds_endpoint" {
   value = module.rds.rds_endpoint
 }
+
+#-------------Monitoring-----------------
+
+output "grafana_service_name" {
+  value = module.monitoring.grafana_service_name
+}
