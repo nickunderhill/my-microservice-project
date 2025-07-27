@@ -32,7 +32,7 @@ spec:
     IMAGE_NAME   = "django-app"
     IMAGE_TAG    = "v1.0.${BUILD_NUMBER}"
     GITHUB_USER = credentials('github-token')
-    GIT_BRANCH = "lesson-8-9"
+    GIT_BRANCH = "final-project"
     COMMIT_EMAIL = "jenkins@localhost"
     COMMIT_NAME  = "jenkins"
   }
