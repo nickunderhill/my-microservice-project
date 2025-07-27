@@ -178,9 +178,9 @@ Jenkins, деплой Django застосунку, зберігання стан
   kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
   ```
 
-Після входу додаток має бути в статусі Healthy:
+  Після входу додаток має бути в статусі Healthy:
 
-![Argo CD Dashboard](/assets/img/argo-cd-dashboard.png 'Argo CD Dashboard')
+  ![Argo CD Dashboard](/assets/img/argo-cd-dashboard.png 'Argo CD Dashboard')
 
 ---
 
@@ -190,18 +190,18 @@ Jenkins, деплой Django застосунку, зберігання стан
   в EKS cluster
 - **Доступ:**
 
-```sh
-kubectl get svc -n monitoring
-```
+  ```sh
+  kubectl get svc -n monitoring
+  ```
 
-Знайдіть LoadBalancer та відкрийте EXTERNAL-IP у браузері.
+  Знайдіть LoadBalancer та відкрийте EXTERNAL-IP у браузері.
 
-**Логін:** admin **Пароль:** admin123
+  **Логін:** admin **Пароль:** admin123
 
-Після входу перейдіть в Dashboards і відкрийте який вас цікавить, наприклад
-**Kubernetes / Compute Resources / Namespace (Pods)**
+  Після входу перейдіть в Dashboards і відкрийте який вас цікавить, наприклад
+  **Kubernetes / Compute Resources / Namespace (Pods)**
 
-![Grafana Dashboard](/assets/img/grafana-dashboard.png 'Grafana Dashboard')
+  ![Grafana Dashboard](/assets/img/grafana-dashboard.png 'Grafana Dashboard')
 
 ---
 
@@ -211,15 +211,15 @@ kubectl get svc -n monitoring
   Aurora-кластер, залежно від прапора `use_aurora = true`
 - **Доступ:**
 
-Після виконання `terraform apply` enpoint доступний в змінній outputs
-`rds_endpoint`. Приклад підключеня до бази даних:
+  Після виконання `terraform apply` enpoint доступний в змінній outputs
+  `rds_endpoint`. Приклад підключеня до бази даних:
 
-```
-psql --host=mydb.xxxxxxxxxxxx.us-east-1.rds.amazonaws.com \
-     --port=5432 \
-     --username=mydbuser \
-     --dbname=mydatabase
-```
+  ```
+  psql --host=mydb.xxxxxxxxxxxx.us-east-1.rds.amazonaws.com \
+      --port=5432 \
+      --username=mydbuser \
+      --dbname=mydatabase
+  ```
 
 ## 🌐 Django app
 
